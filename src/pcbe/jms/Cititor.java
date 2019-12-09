@@ -12,12 +12,12 @@ import javax.jms.Topic;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
-public class TopicProducer {
+public class Cititor {
     private Session session;
     private final String destinationName = "topic/news";
 
     public static void main(String[] args) throws Exception {
-        new TopicProducer().init();
+        new Cititor().init();
     }
 
     public void init() throws Exception {
@@ -34,7 +34,7 @@ public class TopicProducer {
             connection = cf.createConnection();
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             connection.start();
-            sendMessage(topic, Events.ADDED.name());
+            sendMessage(topic, Events.READ.name());
 
         } finally {
             if (ic != null) {

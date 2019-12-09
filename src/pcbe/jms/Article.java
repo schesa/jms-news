@@ -40,7 +40,8 @@ public class Article{
         lastModification = new Date();
     }
 
-    public String printArticle(){
+    @Override
+    public String toString() {
         return articleName + "\n\t" + content + "\n\t\t" + author;
     }
 }

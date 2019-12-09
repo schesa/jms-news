@@ -15,13 +15,14 @@ import javax.jms.Topic;
 import javax.naming.Context;
 
 public class TopicConsumer implements MessageListener {
+    private Session session;
+    private final String destinationName = "topic/news";
 
     public static void main(String[] args) throws Exception {
         new TopicConsumer().init();
     }
 
     public void init() throws Exception {
-        String destinationName = "topic/news";
 
         Context ic = null;
         ConnectionFactory cf = null;
@@ -34,7 +35,7 @@ public class TopicConsumer implements MessageListener {
             Topic topic = (Topic) ic.lookup(destinationName);
 
             connection = cf.createConnection();
-            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             MessageConsumer subscriber = session.createConsumer(topic);
 
             subscriber.setMessageListener(this);

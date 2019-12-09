@@ -1,41 +1,43 @@
 package pcbe.jms;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class NewsDomain{
 
-    private String newsName;
-    private Date publication;
-    private Map<String, List<Article>> news = new Map<String, List<Article>>();
+    private String domain;
+    private Map<String, List<Article>> news = new HashMap<String, List<Article>>();
 
-    public NewsDomain(String newsName){
-        this.newsName = newsName;
-        publication = new Date();
+    public NewsDomain(String domain){
+        this.domain = domain;
     }
 
-    public void addArticle(String domain, Article article){
-        List<Article> articleList = news.get(domain);
+    public void addArticle(String subDomain, Article article){
+        List<Article> articleList = news.get(subDomain);
 
         if(articleList == null) {
             articleList = new ArrayList<Article>();
             articleList.add(article);
-            items.put(domain, articleList);
+            news.put(subDomain, articleList);
         } else {
             if(!articleList.contains(article)) articleList.add(article);
         }
     }
 
-    public String readArticle(String domain, String articleName){
-        List<Article> articles = news.get(domain);
-        if(articles == null)
+    public String readArticle(String subDomain, String articleName){
+        String article = null;
+        List<Article> articles = news.get(subDomain);
+        if (articles == null || articles.size() == 0)
             return "There are no articles in this domain";
         else
         {
-            for (Article article: articles) {
-                if(article.getArticleName().equals(articleName))
-                    return article.printArticle();
+            for (Article a : articles) {
+                if (a.getArticleName().equals(articleName)) article = a.toString();
+                break;
             }
         }
-
+        return article;
     }
 }
